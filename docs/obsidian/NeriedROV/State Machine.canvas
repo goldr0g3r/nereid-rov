@@ -1,0 +1,17 @@
+{
+	"nodes":[
+		{"id":"f429fa3edbb319e7","x":-180,"y":120,"width":250,"height":60,"type":"text","text":"New State\n"},
+		{"id":"49fef97400e49681","x":-180,"y":-340,"width":250,"height":60,"type":"text","text":"Previous State"},
+		{"id":"b3670e0e33b21e5c","x":-240,"y":-120,"width":250,"height":60,"type":"text","text":"Change State"},
+		{"id":"d47263883fdc6597","x":-560,"y":-220,"width":250,"height":60,"type":"text","text":"Hand Controller Unit - Lights"},
+		{"id":"8d207cdabb50b2d3","x":-624,"y":-107,"width":250,"height":107,"type":"text","text":"STATES:\nLIGHTS_ON\nLIGHTS_OFF"},
+		{"id":"453812fb3e854819","x":-180,"y":255,"width":250,"height":60,"type":"text","text":"Switches the Light ON or OFF based on the State"}
+	],
+	"edges":[
+		{"id":"4a8d03a9c7838f51","fromNode":"d47263883fdc6597","fromSide":"right","toNode":"b3670e0e33b21e5c","toSide":"left"},
+		{"id":"184712811699455c","fromNode":"49fef97400e49681","fromSide":"bottom","toNode":"b3670e0e33b21e5c","toSide":"top","label":"check previous state"},
+		{"id":"560d5d12f6975e69","fromNode":"b3670e0e33b21e5c","fromSide":"bottom","toNode":"f429fa3edbb319e7","toSide":"top","label":"compares previous state and change the state"},
+		{"id":"320dea8fcfa9dbf1","fromNode":"f429fa3edbb319e7","fromSide":"right","toNode":"49fef97400e49681","toSide":"right","label":"adds the new state to previous state  for next time"},
+		{"id":"81fe50e96867686c","fromNode":"f429fa3edbb319e7","fromSide":"bottom","toNode":"453812fb3e854819","toSide":"top"}
+	]
+}

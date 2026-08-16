@@ -31,3 +31,10 @@ results/**/*
 .idea/
 .DS_Store
 Thumbs.db
+
+# STM32CubeIDE / CubeMX generated build artifacts
+**/Debug/
+**/Release/
+**/.settings/
+**/build/
+**/cmake-build-*/

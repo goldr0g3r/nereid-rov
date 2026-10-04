@@ -1,0 +1,13 @@
+# Formatting for project C code (vendor and generated code are excluded by path).
+BasedOnStyle: Microsoft
+IndentWidth: 4
+ColumnLimit: 120
+BreakBeforeBraces: Allman
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveMacros: Consecutive
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+PointerAlignment: Right
+SortIncludes: CaseSensitive
+IncludeBlocks: Preserve

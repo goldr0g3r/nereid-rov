@@ -1,8 +1,24 @@
-# Mini ROV Engineering Repository
+# Nereid ROV
 
-A GitHub-ready, implementation-neutral scaffold for modeling, simulation, control, embedded software, hardware development, verification, and operation of a mini remotely operated vehicle (ROV).
+A solo, from-scratch mini remotely operated vehicle (ROV). The repository covers modelling, simulation, control, embedded firmware, hardware, verification and operation.
 
-> **Current state:** architecture and documentation only. No Python, MATLAB, Simulink, firmware, or generated implementation source is included. Every directory contains `.gitkeep` so the complete structure survives the first Git push.
+> **Current state (2026-10):**
+> - **ECU firmware baseline exists** in [`firmware/`](firmware/README.md). It runs on a NUCLEO-F412ZG (STM32F412, FreeRTOS) and uses an AUTOSAR-inspired layered architecture with hierarchical state machines.
+> - Mode management, fault management and watchdog supervision are implemented. They are unit-tested and run end-to-end on Linux through the FreeRTOS POSIX port.
+> - The on-target bring-up needs one CubeMX regeneration step.
+> - Models, controllers, topside software and hardware are still documentation only.
+> - Next steps are in the [roadmap](docs/project/roadmap.md).
+
+## Firmware quick start
+
+```bash
+git submodule update --init --recursive
+cd firmware && cmake --preset host && cmake --build --preset host && ctest --preset host
+```
+
+Architecture: [`docs/software/firmware_architecture.md`](docs/software/firmware_architecture.md) ·
+State machines: [`docs/software/state_machines.md`](docs/software/state_machines.md) ·
+Pin plan: [`docs/hardware/ecu_resource_allocation.md`](docs/hardware/ecu_resource_allocation.md)
 
 ## Design goals
 
@@ -18,8 +34,8 @@ A GitHub-ready, implementation-neutral scaffold for modeling, simulation, contro
 - `models/`: Python and Simulink plant-model workspaces.
 - `controllers/`: guidance, estimation, control, filtering, and allocation.
 - `simulation/`: scenarios, runners, SIL, HIL, and co-simulation.
-- `software/`: onboard, topside, drivers, and communication protocols.
-- `firmware/`: microcontroller-level targets.
+- `firmware/`: **ECU firmware** (STM32 + FreeRTOS): layered BSW/RTE/SWCs, ports, variants, tests.
+- `software/`: topside station, future companion-computer software, tether protocol definitions.
 - `hardware/`: mechanical, electrical, wiring, fabrication, and BOM artifacts.
 - `calibration/`: sensor and actuator calibration evidence.
 - `experiments/`: bench, pool, and open-water plans and records.
@@ -29,6 +45,15 @@ A GitHub-ready, implementation-neutral scaffold for modeling, simulation, contro
 - `docs/`: system engineering and mathematical design documentation.
 
 ## Documentation reading order
+
+Firmware first:
+
+1. [`docs/project/roadmap.md`](docs/project/roadmap.md)
+2. [`docs/software/firmware_architecture.md`](docs/software/firmware_architecture.md)
+3. [`docs/software/state_machines.md`](docs/software/state_machines.md)
+4. [`docs/decisions/`](docs/decisions) (ADR-004 … ADR-008)
+
+System and physics:
 
 1. [`docs/architecture/system_overview.md`](docs/architecture/system_overview.md)
 2. [`docs/modeling/coordinate_frames.md`](docs/modeling/coordinate_frames.md)

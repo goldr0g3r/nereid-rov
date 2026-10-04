@@ -41,6 +41,23 @@ Controls: command/wrench limits, rate limits, independent watchdog, estimator pl
 
 Classify faults as advisory, degraded, failsafe, and emergency stop. For each fault define detection logic, debounce, latching, actuator response, operator indication, logging, reset conditions, and verification test.
 
+**Firmware implementation.**
+- Each fault is a Dem event with exactly these four classes, plus a debounce and latch configuration (`firmware/variants/nereid_v1/src/Dem_Cfg.c`).
+- The worst active class drives the VehicleMode state machine: DEGRADED → reduced authority, FAILSAFE → propulsion neutral with operator reset, EMERGENCY → latched emergency stop. See [`state_machines.md`](../software/state_machines.md).
+- Operator indication is the red LED pattern now, and telemetry from M2.
+
+Current event table:
+
+| Event | Class | Latched | Detection |
+|---|---|---|---|
+| DEV_ERROR | advisory | yes | Det programming-error report |
+| TASK_OVERRUN | advisory | yes | task missed its period |
+| WDGM_SUPERVISION | failsafe | yes | control task alive count outside 8–12 per 100 ms; persists → IWDG reset |
+| WATCHDOG_RESET | advisory | yes | last reset caused by a watchdog |
+| CONFIG_INVALID | failsafe | no | configuration validation (M6) |
+
+Planned: COMM_LOST (failsafe, M2), sensor stale/implausible (degraded, M4), LEAK (emergency, M6), battery low/critical (degraded/failsafe, M6). The classes need a safety review before the first wet test.
+
 ## 5. Operational boundaries
 
 Define maximum depth, current, tether length/load, temperature, battery limits, water type, visibility, allowed weather, launch/recovery method, and minimum crew. Exceeding an envelope boundary requires abort or explicit engineering disposition.

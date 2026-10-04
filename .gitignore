@@ -38,3 +38,6 @@ Thumbs.db
 **/.settings/
 **/build/
 **/cmake-build-*/
+
+# Firmware build trees (CMake presets)
+firmware/build/

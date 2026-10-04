@@ -82,9 +82,21 @@ For thruster \(i\), store command, requested force, achieved-force estimate, sat
 
 Mode transitions require explicit guards. Arming must require fresh command, valid estimator, acceptable battery, no leak indication, configured limits, and neutral pilot input. Emergency stop shall override normal control.
 
+The firmware implementation of these modes is the VehicleMode state machine. Its full transition table, guards and tests are in [`docs/software/state_machines.md`](../software/state_machines.md). `POWER_OFF` is physical. `MISSION` is deferred to roadmap M8.
+
+## 5a. Compute partitioning
+
+The **STM32 ECU** runs the deterministic, safety-relevant chain:
+- I/O and sensor acquisition
+- estimation
+- control loops and allocation
+- the mode/safety supervisor (VehicleMode, Dem, WdgM)
+
+A **companion computer** may be added later for video, aided navigation and ML-based station keeping (roadmap M8). It sends references or wrench setpoints through the tether protocol. The ECU treats it as one more command source, with freshness and authority limits, and remains the only component that grants propulsion. See [`firmware_architecture.md` §10](../software/firmware_architecture.md).
+
 ## 6. Timing
 
-Use monotonic timestamps and measure actual \(\Delta t\). A practical starting decomposition is a fast actuator/control task, medium-rate estimation task, and slower telemetry/logging task. Exact rates are hardware-dependent and must be established through timing measurement. Every task needs a deadline, worst-case execution budget, stale-data threshold, and overrun response.
+Use monotonic timestamps and measure actual \(\Delta t\). A practical starting decomposition is a fast actuator/control task, medium-rate estimation task, and slower telemetry/logging task. The ECU's initial task set (10 ms control, 20 ms comm, 100 ms housekeeping), with execution-time measurement and overrun/alive supervision, is defined in [`firmware_architecture.md` §6](../software/firmware_architecture.md). Exact rates are hardware-dependent and must be established through timing measurement. Every task needs a deadline, worst-case execution budget, stale-data threshold, and overrun response.
 
 ## 7. Configuration ownership
 

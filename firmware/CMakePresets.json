@@ -1,0 +1,44 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 3, "minor": 22, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": { "NEREID_VARIANT": "nereid_v1" }
+    },
+    {
+      "name": "host",
+      "displayName": "Host (Linux): unit tests + FreeRTOS POSIX simulation",
+      "inherits": "base",
+      "cacheVariables": { "NEREID_TARGET": "host", "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "f412-debug",
+      "displayName": "NUCLEO-F412ZG Debug",
+      "inherits": "base",
+      "toolchainFile": "${sourceDir}/cmake/arm-none-eabi.cmake",
+      "cacheVariables": { "NEREID_TARGET": "stm32f412", "CMAKE_BUILD_TYPE": "Debug" }
+    },
+    {
+      "name": "f412-release",
+      "displayName": "NUCLEO-F412ZG Release",
+      "inherits": "f412-debug",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "MinSizeRel" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "host", "configurePreset": "host" },
+    { "name": "f412-debug", "configurePreset": "f412-debug" },
+    { "name": "f412-release", "configurePreset": "f412-release" }
+  ],
+  "testPresets": [
+    {
+      "name": "host",
+      "configurePreset": "host",
+      "output": { "outputOnFailure": true }
+    }
+  ]
+}

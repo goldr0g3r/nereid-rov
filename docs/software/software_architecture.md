@@ -1,16 +1,29 @@
 # Onboard and Topside Software Architecture
 
+This document states *what* the vehicle software must do. *How* the ECU firmware does it
+(layers, modules, tasks, state machines) is in
+[`firmware_architecture.md`](firmware_architecture.md) and [`state_machines.md`](state_machines.md).
+
+| Software | Runs on | Location |
+|---|---|---|
+| ECU firmware | STM32F412 (NUCLEO-F412ZG), FreeRTOS | `firmware/` |
+| Companion computer software (future) | Linux SBC on the vehicle | `software/onboard/` |
+| Operator station, joystick, telemetry | topside PC | `software/topside/` |
+| Tether protocol | shared definition | `software/protocols/` |
+
 ## 1. Onboard services
 
-- Hardware abstraction and drivers
-- Sensor acquisition and timestamping
-- Calibration and health monitoring
-- State estimation
-- Command validation and reference shaping
-- Control and allocation
-- Safety supervisor and watchdog
-- Telemetry and logging
-- Configuration loading and validation
+Each service below maps to a firmware module (in brackets).
+
+- Hardware abstraction and drivers (MCAL, IoHwAb, device drivers)
+- Sensor acquisition and timestamping (drivers + Gpt, M4)
+- Calibration and health monitoring (drivers → Dem, M4/M6)
+- State estimation (StateEst SWC, M4)
+- Command validation and reference shaping (Com, PilotCmd SWC, M2)
+- Control and allocation (DepthCtrl/HeadingCtrl/ThrustAlloc SWCs, M3/M5)
+- Safety supervisor and watchdog (VehicleMode, BswM, Dem, WdgM + IWDG, **implemented**)
+- Telemetry and logging (Log **implemented**; Com telemetry M2)
+- Configuration loading and validation (variant config now; NvM + validation M6)
 
 ## 2. Deterministic control cycle
 

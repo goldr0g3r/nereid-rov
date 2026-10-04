@@ -2,14 +2,23 @@
 
 ## 1. Test levels
 
-- **Unit:** equations, transforms, filters, PID, maps, protocol encoding.
+- **Unit:** equations, transforms, filters, PID, maps, protocol encoding. Firmware: `firmware/tests/unit` (Unity, host), one test per lib module, service and SWC. SWCs are tested against a fake RTE.
 - **Integration:** estimator plus sensors, controller plus allocator, drivers plus interfaces.
-- **SIL:** production behavior against simulated plant.
+- **SIL:** production behavior against simulated plant. Firmware: the complete ECU build runs on the FreeRTOS POSIX port (`nereid_host`). Today it is driven by a scripted button (`host_smoke_mode_sequence`); from M5 it will be driven by the Python plant through a socket MCAL port.
 - **HIL:** real compute and timing against simulated or emulated I/O.
 - **Bench:** electrical and mechanical subsystem verification.
 - **Wet restrained:** propulsion and sensing under controlled restraint.
 - **Pool:** vehicle-level performance.
 - **Acceptance:** requirements-based release evidence.
+
+### 1.1 Firmware verification commands
+
+```bash
+cd firmware && cmake --preset host && cmake --build --preset host && ctest --preset host
+python3 firmware/tools/check_layers.py
+```
+
+CI runs both on every push (`.github/workflows/firmware.yml`). A behaviour change to a state machine updates [`state_machines.md`](../software/state_machines.md) and its tests in the same commit.
 
 ## 2. Standard test record
 

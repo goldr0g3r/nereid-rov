@@ -20,7 +20,9 @@ measurable. Dates are deliberately absent. Update the **Status** column when a m
 **Exit criteria:**
 - [x] `firmware/` layered skeleton, CMake presets, FreeRTOS + Unity submodules pinned
 - [x] Host build, unit tests and layering check in CI (`.github/workflows/firmware.yml`)
-- [ ] Install `arm-none-eabi-gcc`, regenerate CubeMX (`firmware/port/stm32f412/cubemx/README.md`), commit
+- [ ] Install the toolchain: `sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib cmake ninja openocd`
+- [ ] Install STM32CubeMX ≥ 6.18 (download from st.com, needs an ST account; not installed on the dev machine as of 2026-10-05)
+- [ ] Regenerate the CubeMX project with the 8 settings in `firmware/port/stm32f412/cubemx/README.md`, review `git diff`, commit
 - [ ] `cmake --preset f412-debug` builds; size report recorded in `ecu_resource_allocation.md`
 - [ ] Flashed: green LED pattern visible, boot banner on the ST-LINK VCP
 - [ ] Remove `continue-on-error` from the CI target job

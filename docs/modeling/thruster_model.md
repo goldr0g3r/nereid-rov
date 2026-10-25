@@ -8,19 +8,19 @@ Use separate layers for command, ESC behavior, motor/propeller dynamics, static 
 
 A common first model is
 
-\[
+$$
 T=k_T n|n|,
-\]
+$$
 
-where \(n\) is shaft speed. If shaft speed is unavailable, identify force directly from normalized command \(c\in[-1,1]\):
+where $n$ is shaft speed. If shaft speed is unavailable, identify force directly from normalized command $c\in[-1,1]$:
 
-\[
+$$
 T(c)=\begin{cases}
 k_f(c-c_{0f})^{\alpha_f},&c>c_{db,+}\\
 0,&c_{db,-}\le c\le c_{db,+}\\
 -k_r(-c-c_{0r})^{\alpha_r},&c<c_{db,-}.
 \end{cases}
-\]
+$$
 
 Forward and reverse coefficients should be independent. Prefer a monotonic calibrated lookup table when data supports it. Clamp extrapolation beyond tested command and voltage.
 
@@ -28,33 +28,33 @@ Forward and reverse coefficients should be independent. Prefer a monotonic calib
 
 A useful empirical extension is
 
-\[
+$$
 T(c,V)=T(c,V_0)\left(\frac{V}{V_0}\right)^\gamma,
-\]
+$$
 
-where \(\gamma\) is identified. Do not assume a universal exponent. Log bus voltage and current because battery sag changes available authority.
+where $\gamma$ is identified. Do not assume a universal exponent. Log bus voltage and current because battery sag changes available authority.
 
 ## 4. Dynamic response
 
 Represent actuator lag by
 
-\[
+$$
 \tau_T\dot T+T=T_{ss}(c,V),
-\]
+$$
 
-with optional asymmetric rise/fall time constants, rate limits, transport delay, and zero-crossing behavior. Discrete exact update for constant input over \(\Delta t\) is
+with optional asymmetric rise/fall time constants, rate limits, transport delay, and zero-crossing behavior. Discrete exact update for constant input over $\Delta t$ is
 
-\[
+$$
 T_{k+1}=e^{-\Delta t/\tau_T}T_k+(1-e^{-\Delta t/\tau_T})T_{ss,k}.
-\]
+$$
 
 ## 5. Installation effects
 
-Thruster performance can change with guards, frame blockage, nearby hulls, inflow, interaction between jets, and vehicle speed. Introduce an installation factor \(0<\kappa_i\le1\) only when supported by data:
+Thruster performance can change with guards, frame blockage, nearby hulls, inflow, interaction between jets, and vehicle speed. Introduce an installation factor $0<\kappa_i\le1$ only when supported by data:
 
-\[
+$$
 T_{installed,i}=\kappa_i T_{bench,i}.
-\]
+$$
 
 Avoid double-counting interaction as both reduced thrust and added vehicle drag.
 

@@ -16,15 +16,15 @@ Pressure test unmanned using an appropriate controlled method and safety barrier
 
 For each load, record nominal voltage, average current, peak current, startup surge, duty cycle, fuse, wire gauge, connector, and thermal assumptions. Approximate battery endurance is
 
-\[
+$$
 t_{ideal}=\frac{C_{Ah}}{I_{avg}},
-\]
+$$
 
 but apply derating for usable capacity, temperature, voltage sag, aging, converter losses, and reserve. Energy-based budgeting is
 
-\[
+$$
 E_{load}=\int V(t)I(t)dt.
-\]
+$$
 
 Fuses primarily protect wiring and should be selected with conductor ampacity, fault current, and transient behavior in mind.
 

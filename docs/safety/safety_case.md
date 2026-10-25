@@ -7,24 +7,31 @@ Software is not the only barrier. Use independent physical isolation, guarded pr
 ## 2. Hazard register starter
 
 ### Unexpected thruster start
+
 Causes: startup transient, stale command, wiring error, software defect. Controls: hardware kill/isolation, guarded thrusters, neutral-before-arm, deliberate arming, command freshness, output watchdog, restrained testing.
 
 ### Water ingress
+
 Causes: damaged O-ring, dirty sealing face, penetrator failure, cracked enclosure. Controls: inspection, pressure test, leak sensing, current protection, emergency recovery, post-dive maintenance.
 
 ### Battery fault or overheating
+
 Causes: short circuit, overcurrent, wrong charger, damaged cell, enclosure heat. Controls: chemistry-appropriate BMS/charger, fusing near source, isolation, thermal monitoring, conservative load budget, fire-safe procedures.
 
 ### Pressure-vessel failure
+
 Causes: over-depth, material defect, incorrect assembly. Controls: rated components, design review, unmanned barriered proof test, depth limit, inspection and retirement criteria.
 
 ### Tether entanglement or excessive load
+
 Controls: strain relief, guards, tether management, abort limit, recovery line, operator coordination.
 
 ### Loss of communication
+
 Controls: stale-command detection, predefined safe output, visible alarm, physical recovery plan. Do not assume surfacing is always safe; mission configuration must define behavior.
 
 ### Runaway controller
+
 Controls: command/wrench limits, rate limits, independent watchdog, estimator plausibility, achieved-wrench monitoring, mode supervisor, hardware kill.
 
 ## 3. Safety requirements
@@ -42,6 +49,7 @@ Controls: command/wrench limits, rate limits, independent watchdog, estimator pl
 Classify faults as advisory, degraded, failsafe, and emergency stop. For each fault define detection logic, debounce, latching, actuator response, operator indication, logging, reset conditions, and verification test.
 
 **Firmware implementation.**
+
 - Each fault is a Dem event with exactly these four classes, plus a debounce and latch configuration (`firmware/variants/nereid_v1/src/Dem_Cfg.c`).
 - The worst active class drives the VehicleMode state machine: DEGRADED → reduced authority, FAILSAFE → propulsion neutral with operator reset, EMERGENCY → latched emergency stop. See [`state_machines.md`](../software/state_machines.md).
 - Operator indication is the red LED pattern now, and telemetry from M2.

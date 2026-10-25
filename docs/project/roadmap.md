@@ -18,6 +18,7 @@ measurable. Dates are deliberately absent. Update the **Status** column when a m
 ## M0 — Foundations
 
 **Exit criteria:**
+
 - [x] `firmware/` layered skeleton, CMake presets, FreeRTOS + Unity submodules pinned
 - [x] Host build, unit tests and layering check in CI (`.github/workflows/firmware.yml`)
 - [ ] Install the toolchain: `sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib cmake ninja openocd`
@@ -30,6 +31,7 @@ measurable. Dates are deliberately absent. Update the **Status** column when a m
 ## M1 — Mode management
 
 **Exit criteria:**
+
 - [x] `lib/Fsm` HSM engine with tests
 - [x] VehicleMode with every transition, guard and invariant tested (`state_machines.md`)
 - [x] Dem classes, WdgM alive supervision, watchdog reset verified on host
@@ -39,12 +41,14 @@ measurable. Dates are deliberately absent. Update the **Status** column when a m
 ## M2 — Communication
 
 **Scope:**
+
 - **Protocol** in `software/protocols/`: a versioned frame with type, sequence, timestamp, length, payload and CRC-16, per `software_architecture.md` §3. COBS framing.
 - **ECU side**: `ComIf` (byte transport over Uart) → `Com` (encode/decode) → RTE queues. `ComM` link state machine (DISCONNECTED / CONNECTED / STALE).
 - **Topside test tool** (`software/topside/`, Python): keyboard or gamepad input, live mode and fault display.
 - **Wiring the guards**: heartbeat timeout becomes Dem `COMM_LOST` (FAILSAFE class). This replaces the `commandFresh` and `pilotNeutral` stubs.
 
 **Exit criteria:**
+
 - Command loss → FAILSAFE within the configured timeout. This is a tested requirement, SAF-COMM-001.
 - Telemetry carries the mode, fault class, Dem events, task timing (`SchM_GetTaskStats`) and the arm-reject mask.
 

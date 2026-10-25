@@ -2,61 +2,61 @@
 
 ## 1. Weight and buoyancy
 
-\[
+$$
 W=mg,\qquad B=\rho g\nabla,
-\]
+$$
 
-where \(\nabla\) is displaced volume. In a NED inertial frame, gravity points down and buoyancy up. The ideal body-frame forces are obtained by rotating inertial forces into BODY:
+where $\nabla$ is displaced volume. In a NED inertial frame, gravity points down and buoyancy up. The ideal body-frame forces are obtained by rotating inertial forces into BODY:
 
-\[
+$$
 f_g^b=R_{bn}[0,0,W]^T,\qquad f_b^b=R_{bn}[0,0,-B]^T.
-\]
+$$
 
-If \(r_g\) and \(r_b\) are body-origin offsets to the centers of gravity and buoyancy,
+If $r_g$ and $r_b$ are body-origin offsets to the centers of gravity and buoyancy,
 
-\[
+$$
 \tau_g=\begin{bmatrix}f_g^b\\r_g\times f_g^b\end{bmatrix},\qquad
 \tau_b=\begin{bmatrix}f_b^b\\r_b\times f_b^b\end{bmatrix}.
-\]
+$$
 
 The restoring vector used on the left side of the dynamic equation is
 
-\[
+$$
 g(\eta)=-(\tau_g+\tau_b).
-\]
+$$
 
-Verify this sign against a simple case: a positively buoyant, level, stationary ROV must accelerate upward in NED, meaning negative \(\dot w\).
+Verify this sign against a simple case: a positively buoyant, level, stationary ROV must accelerate upward in NED, meaning negative $\dot w$.
 
 ## 2. Static stability
 
-Common design intent is slight positive buoyancy and center of buoyancy above center of gravity. For small roll angle \(\phi\), a restoring moment may be approximated as
+Common design intent is slight positive buoyancy and center of buoyancy above center of gravity. For small roll angle $\phi$, a restoring moment may be approximated as
 
-\[
+$$
 K_R\approx-k_\phi\phi,
 \qquad k_\phi\approx B\,GM_T,
-\]
+$$
 
-where \(GM_T\) is an effective transverse metacentric or lever measure for the configuration. For a fully submerged rigid body, derive the moment directly from \(r_b-r_g\). Do not use surface-vessel formulas without checking applicability.
+where $GM_T$ is an effective transverse metacentric or lever measure for the configuration. For a fully submerged rigid body, derive the moment directly from $r_b-r_g$. Do not use surface-vessel formulas without checking applicability.
 
 ## 3. Damping
 
 A practical low-speed model combines linear and quadratic damping:
 
-\[
+$$
 D(\nu_r)\nu_r=D_L\nu_r+D_Q|\nu_r|\nu_r,
-\]
+$$
 
 where absolute value is elementwise in the diagonal approximation. Per-axis force can be written
 
-\[
+$$
 F_i=-d_i v_i-d_{i|i|}|v_i|v_i.
-\]
+$$
 
 A geometry-based estimate for quadratic drag is
 
-\[
+$$
 F_D=-\frac{1}{2}\rho C_D A |v_r|v_r.
-\]
+$$
 
 The coefficient and projected area depend on direction, Reynolds number, blockage, appendages, tether, and thruster flow. Use estimates for initialization only, then identify from tests.
 
@@ -64,10 +64,10 @@ The coefficient and projected area depend on direction, Reynolds number, blockag
 
 Store current in NED and transform it into body axes at each step:
 
-\[
+$$
 v_c^b=R_{bn}v_c^n,
 \qquad \nu_{r,linear}=\nu_1-v_c^b.
-\]
+$$
 
 Models may include steady current, slowly varying current, bounded gusts, and vertical current. Scenario files must state whether the current is inertial-fixed or body-fixed.
 
@@ -75,21 +75,21 @@ Models may include steady current, slowly varying current, bounded gusts, and ve
 
 At minimum, model tether load as bounded disturbance. A lumped model may use
 
-\[
+$$
 f_t=-k_t\Delta l\,\hat e-c_t\dot l\,\hat e+f_{drag},
-\]
+$$
 
-only when the tether is taut, where \(\hat e\) is the line direction. Tether moment is
+only when the tether is taut, where $\hat e$ is the line direction. Tether moment is
 
-\[
+$$
 m_t=r_{attach}\times f_t.
-\]
+$$
 
 A simple drag approximation is
 
-\[
+$$
 f_{drag}\approx-\frac12\rho C_{D,t}A_t|v_{rel}|v_{rel}.
-\]
+$$
 
 The tether can dominate mini-ROV behavior. Validate with the intended length, buoyancy, bend radius, and current.
 

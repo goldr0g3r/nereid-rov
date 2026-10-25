@@ -19,11 +19,13 @@ The "Test" column links behaviour to `firmware/tests/unit`.
 component that grants propulsion.
 
 **Inputs:**
+
 - operator requests (queued)
 - worst active fault class (Dem via BswM)
 - arming inputs: self-test, command freshness, estimator, battery, leak, pilot neutral, e-stop released
 
 **Outputs:**
+
 - `Mode`
 - `PropulsionEnable` (true **only** inside ARMED, set by ARMED's entry/exit actions)
 - `AuthorityLimit` (0…1)
@@ -59,6 +61,7 @@ state. EMERGENCY_STOP absorbs every other event, which makes it **latched**.
 ### Cycle (10 ms runnable)
 
 Each 10 ms cycle runs these steps in order:
+
 1. Read inputs.
 2. If the fault class is EMERGENCY, dispatch ESTOP. This pre-empts everything else in the cycle.
 3. Dispatch up to 4 queued operator requests.

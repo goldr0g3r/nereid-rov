@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Docs: math and Markdown rendering fix (2026-10-25)
+
+- Equations were written as `\[ … \]` and `\( … \)`. GitHub and the VS Code preview don't render those, so they showed as raw `[ e_z=z_d-z … ]` text. All 147 equations in 10 docs are converted to `$$ … $$` / `$ … $`, and each one was checked to compile with KaTeX.
+- Added the blank lines around lists, headings and code fences that stricter Markdown renderers need. No text changed.
+- When writing new equations, use `$…$` inline and `$$` on its own line for display maths.
+
 ### Firmware baseline (2026-10-04)
 
 - Added the layered ECU firmware in `firmware/`. It is AUTOSAR-inspired: MCAL API → IoHwAb → services (Os, SchM, EcuM, BswM, Det, Dem, WdgM, Log) → hand-written RTE → SWCs (VehicleMode, StatusLed, BenchPanel, Lights).

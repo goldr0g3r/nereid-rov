@@ -35,29 +35,29 @@ Recommended parity cases:
 
 For constant acceleration with no damping,
 
-\[
+$$
 v(t)=v_0+at,\qquad x(t)=x_0+v_0t+\frac12at^2.
-\]
+$$
 
 For a first-order actuator step,
 
-\[
+$$
 T(t)=T_{ss}+(T_0-T_{ss})e^{-t/\tau_T}.
-\]
+$$
 
 For linear free decay,
 
-\[
+$$
 m_e\dot v+dv=0
 \quad\Rightarrow\quad
 v(t)=v_0e^{-dt/m_e}.
-\]
+$$
 
 These cases isolate integration and sign errors before nonlinear tests.
 
 ## 4. Numerical verification
 
-Run timestep convergence studies. If \(x_h\) and \(x_{h/2}\) differ materially, results are not timestep-independent. Monitor energy, quaternion norm, solver warnings, stiffness, algebraic loops, discontinuities, and zero crossings.
+Run timestep convergence studies. If $x_h$ and $x_{h/2}$ differ materially, results are not timestep-independent. Monitor energy, quaternion norm, solver warnings, stiffness, algebraic loops, discontinuities, and zero crossings.
 
 ## 5. Uncertainty and robustness
 

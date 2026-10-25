@@ -58,15 +58,15 @@ timestamp_s         monotonic time
 
 ### Desired generalized wrench
 
-\[
+$$
 \tau_d = [X_d,\;Y_d,\;Z_d,\;K_d,\;M_d,\;N_d]^T
-\]
+$$
 
 Translations are forces in newtons; rotations are moments in newton-metres. All wrench components are expressed in BODY unless an interface explicitly states otherwise.
 
 ### Thruster command
 
-For thruster \(i\), store command, requested force, achieved-force estimate, saturation state, direction, fault state, and timestamp. Separate allocation from electrical command conversion because forward and reverse thrust commonly differ.
+For thruster $i$, store command, requested force, achieved-force estimate, saturation state, direction, fault state, and timestamp. Separate allocation from electrical command conversion because forward and reverse thrust commonly differ.
 
 ## 5. Operating modes
 
@@ -87,6 +87,7 @@ The firmware implementation of these modes is the VehicleMode state machine. Its
 ## 5a. Compute partitioning
 
 The **STM32 ECU** runs the deterministic, safety-relevant chain:
+
 - I/O and sensor acquisition
 - estimation
 - control loops and allocation
@@ -96,7 +97,7 @@ A **companion computer** may be added later for video, aided navigation and ML-b
 
 ## 6. Timing
 
-Use monotonic timestamps and measure actual \(\Delta t\). A practical starting decomposition is a fast actuator/control task, medium-rate estimation task, and slower telemetry/logging task. The ECU's initial task set (10 ms control, 20 ms comm, 100 ms housekeeping), with execution-time measurement and overrun/alive supervision, is defined in [`firmware_architecture.md` §6](../software/firmware_architecture.md). Exact rates are hardware-dependent and must be established through timing measurement. Every task needs a deadline, worst-case execution budget, stale-data threshold, and overrun response.
+Use monotonic timestamps and measure actual $\Delta t$. A practical starting decomposition is a fast actuator/control task, medium-rate estimation task, and slower telemetry/logging task. The ECU's initial task set (10 ms control, 20 ms comm, 100 ms housekeeping), with execution-time measurement and overrun/alive supervision, is defined in [`firmware_architecture.md` §6](../software/firmware_architecture.md). Exact rates are hardware-dependent and must be established through timing measurement. Every task needs a deadline, worst-case execution budget, stale-data threshold, and overrun response.
 
 ## 7. Configuration ownership
 

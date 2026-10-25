@@ -3,6 +3,7 @@
 A solo, from-scratch mini remotely operated vehicle (ROV). The repository covers modelling, simulation, control, embedded firmware, hardware, verification and operation.
 
 > **Current state (2026-10):**
+>
 > - **ECU firmware baseline exists** in [`firmware/`](firmware/README.md). It runs on a NUCLEO-F412ZG (STM32F412, FreeRTOS) and uses an AUTOSAR-inspired layered architecture with hierarchical state machines.
 > - Mode management, fault management and watchdog supervision are implemented. They are unit-tested and run end-to-end on Linux through the FreeRTOS POSIX port.
 > - The on-target bring-up needs one CubeMX regeneration step.

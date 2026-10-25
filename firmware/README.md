@@ -48,21 +48,27 @@ no `--script`, tokens are read from stdin. Set `NEREID_TRACE_DIO=1` to print LED
 ## Target build (NUCLEO-F412ZG)
 
 1. Install the cross toolchain (Arch / CachyOS):
+
    ```bash
    sudo pacman -S arm-none-eabi-gcc arm-none-eabi-newlib cmake ninja
    ```
+
 2. Do the **one-time CubeMX regeneration** described in
    [`port/stm32f412/cubemx/README.md`](port/stm32f412/cubemx/README.md). It switches the HAL time base to TIM6 and hands the SysTick, SVC and PendSV handlers to FreeRTOS.
 3. Build:
+
    ```bash
    cmake --preset f412-debug
    cmake --build --preset f412-debug
    ```
+
    This produces `build/f412-debug/nereid_ecu.elf`, `.hex`, `.bin` and `.map`.
 4. Flash with STM32CubeProgrammer, or with OpenOCD:
+
    ```bash
    openocd -f interface/stlink.cfg -f target/stm32f4x.cfg -c "program build/f412-debug/nereid_ecu.elf verify reset exit"
    ```
+
 5. Open the ST-LINK virtual COM port at 115200 8N1 to see the log. On the board:
    - **Green LED**: shows the mode.
    - **Red LED**: shows faults.
